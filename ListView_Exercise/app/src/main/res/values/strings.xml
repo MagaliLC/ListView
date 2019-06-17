@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ListView_Exercise</string>
+    <string name="listHint">Escribe aquí</string>
+    <string name="save">Guardar</string>
+    <string name="delete">¿Desea borrar todos los elementos de la lista?</string>
+    <string name="yes">SÍ</string>
+    <string name="no">NO</string>
+</resources>
