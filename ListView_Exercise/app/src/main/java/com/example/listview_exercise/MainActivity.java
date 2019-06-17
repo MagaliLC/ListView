@@ -13,12 +13,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Activity activity = this;
     ListView listView;
     ArrayAdapter<String> adapter;
-    ArrayList<String> items;
+    List<String> items;
     EditText etItem;
 
     @Override
@@ -43,28 +44,29 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                deleteAll();
+                openDialog(position);
                 return true;
             }
         });
-
     }
-
 
     public void addItemToList(View view) {
         String item = etItem.getText().toString();
-        items.add(item);
-        adapter.notifyDataSetChanged();
+        if (!"".equals(item)) {
+            items.add(item);
+            adapter.notifyDataSetChanged();
+            etItem.setText("");
+        }
     }
 
-    public void deleteAll() {
+    public void openDialog(final int position) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle(getString(R.string.app_name));
         alertDialogBuilder.setMessage(getString(R.string.delete)).setCancelable(false)
                 .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int d) {
-                        items.clear();
+                        items.remove(position);
                         adapter.notifyDataSetChanged();
                     }
                 })
@@ -77,6 +79,5 @@ public class MainActivity extends AppCompatActivity {
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
     }
 }
