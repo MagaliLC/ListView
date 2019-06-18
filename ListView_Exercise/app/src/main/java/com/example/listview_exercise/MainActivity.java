@@ -30,13 +30,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        items = new ArrayList<Product>();
+
         listView = findViewById(R.id.lv_list);
         etItem = findViewById(R.id.et_item);
         etUnits = findViewById(R.id.et_units);
         bought = findViewById(R.id.bought);
-        items = new ArrayList<Product>();
+
 
         adapter = new MyAdapter(activity, R.layout.row, items);
+
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,12 +62,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void addItemToList(View view) {
+
         String item = etItem.getText().toString();
-        int units=Integer.parseInt(etUnits.getText().toString());
+        String units=etUnits.getText().toString();
         boolean isBought = bought.isChecked();
         if (!"".equals(item) && (!"".equals(units))) {
-            items.add(new Product(item,units,isBought));
+            items.add(new Product(item,Integer.parseInt(units),isBought));
             adapter.notifyDataSetChanged();
+
             etItem.setText("");
             etUnits.setText("");
             bought.setChecked(false);
