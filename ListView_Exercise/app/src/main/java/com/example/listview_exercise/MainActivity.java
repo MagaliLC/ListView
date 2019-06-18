@@ -5,21 +5,23 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.listview_exercise.model.Product;
+
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
     Activity activity = this;
     ListView listView;
-    ArrayAdapter<String> adapter;
-    List<String> items;
+    MyAdapter adapter;
+    ArrayList<Product> items;
     EditText etItem;
 
     @Override
@@ -28,15 +30,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView = findViewById(R.id.lv_list);
         etItem = findViewById(R.id.et_item);
-        items = new ArrayList<String>();
+        items = new ArrayList<Product>();
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, items);
+        adapter = new MyAdapter(activity, R.layout.row, items);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String itemValue = (String) listView.getItemAtPosition(position);
+
+                String itemValue = items.get(position).getName();
                 Toast.makeText(activity, position + " - " + itemValue, Toast.LENGTH_LONG).show();
             }
         });
@@ -48,16 +51,31 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+        etItem.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_ENTER:
+                            String item = etItem.getText().toString();
+                            if (!"".equals(item)) {
+                                items.add(new Product(item));
+                                adapter.notifyDataSetChanged();
+                                etItem.setText("");
+                            
+                            }
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+
+        });
     }
 
-    public void addItemToList(View view) {
-        String item = etItem.getText().toString();
-        if (!"".equals(item)) {
-            items.add(item);
-            adapter.notifyDataSetChanged();
-            etItem.setText("");
-        }
-    }
 
     public void openDialog(final int position) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -80,4 +98,5 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
 }
