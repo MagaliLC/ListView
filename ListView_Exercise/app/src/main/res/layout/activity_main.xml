@@ -7,21 +7,82 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/et_item"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/listHint" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/name"
+            android:layout_margin="10dp"
+            />
+
+        <EditText
+            android:id="@+id/et_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:hint="@string/listHint"
+            android:layout_margin="10dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/units"
+            android:layout_margin="10dp"
+            />
+
+        <EditText
+            android:id="@+id/et_units"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:hint="@string/listHint"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/bought"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/bought"
+        android:layout_margin="10dp"
+        />
 
     <Button
         android:id="@+id/btn_ok"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:background="@color/blue"
         android:onClick="addItemToList"
         android:text="@string/save"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:layout_margin="10dp"
+        />
+
+</LinearLayout>
+
 
     <ListView
         android:id="@+id/lv_list"

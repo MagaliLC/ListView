@@ -5,4 +5,7 @@
     <string name="delete">¿Desea borrar el elemento de la lista?</string>
     <string name="yes">SÍ</string>
     <string name="no">NO</string>
+    <string name="name">Nombre</string>
+    <string name="units">Unidades</string>
+    <string name="bought">Comprado</string>
 </resources>

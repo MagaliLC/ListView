@@ -5,10 +5,10 @@ public class Product {
     int units;
     boolean isBought;
 
-    public Product (String name){
+    public Product (String name, int units, boolean isBought){
         this.name = name;
-        this.units = 1;
-        isBought= false;
+        this.units=units;
+        this.isBought= isBought;
     }
 
     public String getName() {

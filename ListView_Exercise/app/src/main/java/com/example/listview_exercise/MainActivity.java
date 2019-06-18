@@ -5,9 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     MyAdapter adapter;
     ArrayList<Product> items;
     EditText etItem;
+    EditText etUnits;
+    CheckBox bought;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView = findViewById(R.id.lv_list);
         etItem = findViewById(R.id.et_item);
+        etUnits = findViewById(R.id.et_units);
+        bought = findViewById(R.id.bought);
         items = new ArrayList<Product>();
 
         adapter = new MyAdapter(activity, R.layout.row, items);
@@ -51,31 +55,21 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
-        etItem.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    switch (keyCode) {
-                        case KeyEvent.KEYCODE_ENTER:
-                            String item = etItem.getText().toString();
-                            if (!"".equals(item)) {
-                                items.add(new Product(item));
-                                adapter.notifyDataSetChanged();
-                                etItem.setText("");
-                            
-                            }
-                            return true;
-                        default:
-                            break;
-                    }
-                }
-                return false;
-            }
-
-        });
     }
 
+
+    public void addItemToList(View view) {
+        String item = etItem.getText().toString();
+        int units=Integer.parseInt(etUnits.getText().toString());
+        boolean isBought = bought.isChecked();
+        if (!"".equals(item) && (!"".equals(units))) {
+            items.add(new Product(item,units,isBought));
+            adapter.notifyDataSetChanged();
+            etItem.setText("");
+            etUnits.setText("");
+            bought.setChecked(false);
+        }
+    }
 
     public void openDialog(final int position) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
