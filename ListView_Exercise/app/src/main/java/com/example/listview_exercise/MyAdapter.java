@@ -40,7 +40,7 @@ public class MyAdapter extends ArrayAdapter<Product> {
         boolean bought = data.get(position).isBought();
         tv_units.setText(String.valueOf(data.get(position).getUnits()));
         tv_text.setText(value);
-        
+
         setRed(bought, tv_text);
 
         return row;

@@ -46,8 +46,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String itemValue = items.get(position).getName();
-                Toast.makeText(activity, position + " - " + itemValue, Toast.LENGTH_LONG).show();
+                items.get(position).setIsBought(true);
+
+                adapter.notifyDataSetChanged();
+                // Toast.makeText(activity, position + " - " + itemValue, Toast.LENGTH_LONG).show();
             }
         });
 
