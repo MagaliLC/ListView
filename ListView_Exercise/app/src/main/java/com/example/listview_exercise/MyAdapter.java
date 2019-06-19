@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.listview_exercise.model.Product;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,12 +36,17 @@ public class MyAdapter extends ArrayAdapter<Product> {
         row = inflater.inflate(layoutResourceId, parent, false);
         TextView tv_text = (TextView) row.findViewById(R.id.text);
         TextView tv_units = (TextView) row.findViewById(R.id.units);
+        ImageView iv_url = (ImageView) row.findViewById(R.id.image);
 
 
         String value = data.get(position).getName();
         boolean bought = data.get(position).isBought();
+       String url = data.get(position).getUrl();
+
         tv_units.setText(String.valueOf(data.get(position).getUnits()));
         tv_text.setText(value);
+
+        Picasso.get().load(url).into(iv_url);
 
         setRed(bought, tv_text);
 

@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Product> items;
     EditText etItem;
     EditText etUnits;
+    EditText etUrl;
     CheckBox bought;
 
     @Override
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         etItem = findViewById(R.id.et_item);
         etUnits = findViewById(R.id.et_units);
         bought = findViewById(R.id.bought);
+        etUrl = findViewById(R.id.et_url);
 
 
         adapter = new MyAdapter(activity, R.layout.row, items);
@@ -66,38 +68,60 @@ public class MainActivity extends AppCompatActivity {
     public void addItemToList(View view) {
 
         String item = etItem.getText().toString();
-        String units=etUnits.getText().toString();
+        String units = etUnits.getText().toString();
+        String url = etUrl.getText().toString();
         boolean isBought = bought.isChecked();
-        if (!"".equals(item) && (!"".equals(units))) {
-            items.add(new Product(item,Integer.parseInt(units),isBought));
+        if (checkFields(item,units,url)) {
+            items.add(new Product(item, Integer.parseInt(units), isBought, url));
             adapter.notifyDataSetChanged();
 
             etItem.setText("");
             etUnits.setText("");
+            etUrl.setText("");
             bought.setChecked(false);
+        } else {
+
         }
     }
 
-    public void openDialog(final int position) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle(getString(R.string.app_name));
-        alertDialogBuilder.setMessage(getString(R.string.delete)).setCancelable(false)
-                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int d) {
-                        items.remove(position);
-                        adapter.notifyDataSetChanged();
-                    }
-                })
-                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+    private boolean checkFields(String item, String units, String url) {
+        boolean result = true;
+        if ("" .equals(item)) {
+            result = false;
+            etItem.setError(getString(R.string.empty));
+        }
+        if ("" .equals(units)) {
+            result = false;
+            etUnits.setError(getString(R.string.empty));
+        }
+        if ("".equals(url)){
+            result = false;
+            etUrl.setError(getString(R.string.empty));
+        }
+        return result;
     }
 
-}
+
+        public void openDialog ( final int position){
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(getString(R.string.app_name));
+            alertDialogBuilder.setMessage(getString(R.string.delete)).setCancelable(false)
+                    .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int d) {
+                            items.remove(position);
+                            adapter.notifyDataSetChanged();
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+    }

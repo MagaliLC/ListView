@@ -8,4 +8,7 @@
     <string name="name">Nombre</string>
     <string name="units">Unidades</string>
     <string name="bought">Comprado</string>
+    <string name="url">Url</string>
+    <string name="empty">Este campo no puede star vacío</string>
+    <string name="ok">Correcto</string>
 </resources>
